@@ -2,7 +2,7 @@
 	<div>Dialog 示例</div>
 	<h1>示例1</h1>
 	<Button @click="toggle">toggle</Button>
-	<Dialog v-model:visible="x"></Dialog>
+	<Dialog v-model:visible="x" :clickOverlayClose="true" :ok="f1" :cancel="f2"></Dialog>
 </template>
 
 <script lang="ts">
@@ -16,13 +16,26 @@ export default {
 	},
 	setup() {
 		const x = ref(false);
-		const toggle = () => {  
+		const toggle = () => {
 			x.value = !x.value;
-      console.log(x)
+			console.log(x);
 		};
+
+		// 支持传入回调
+		const f1 = () => {
+      console.log('ok')
+			return true;
+		};
+
+		const f2 = () => {
+      console.log('cancel')
+		};
+
 		return {
 			x,
 			toggle,
+			f1,
+			f2,
 		};
 	},
 };
