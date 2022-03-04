@@ -3,20 +3,23 @@
 	<h1>示例1</h1>
 	<Button @click="toggle">toggle</Button>
 	<Dialog v-model:visible="x" :clickOverlayClose="true" :ok="f1" :cancel="f2">
-    <template v-slot:content>
-      <p>2131</p>
-      <p>2312</p>
-    </template>
-    <template v-slot:header>
-      <strong>title</strong>
-    </template>
-  </Dialog>
+		<template v-slot:content>
+			<p>2131</p>
+			<p>2312</p>
+		</template>
+		<template v-slot:title>
+			<strong>title</strong>
+		</template>
+	</Dialog>
+	<h2>示例2 一个按钮展示组件</h2>
+	<button @click="showDialog">展示</button>
 </template>
 
 <script lang="ts">
 import Button from "../libs/Button.vue";
 import Dialog from "../libs/Dialog.vue";
-import {ref} from "vue";
+import {ref, h} from "vue";
+import {openDialog} from "../libs/openDialog";
 export default {
 	components: {
 		Dialog,
@@ -31,12 +34,25 @@ export default {
 
 		// 支持传入回调
 		const f1 = () => {
-      console.log('ok')
+			console.log("ok");
 			return true;
 		};
 
 		const f2 = () => {
-      console.log('cancel')
+			console.log("cancel");
+		};
+
+		const showDialog = () => {
+			openDialog({
+				title: h("strong", {}, "title123"),
+				content: "hello world",
+				ok() {
+					console.log("ok");
+				},
+				cancel() {
+					console.log("cancel");
+				},
+			});
 		};
 
 		return {
@@ -44,6 +60,7 @@ export default {
 			toggle,
 			f1,
 			f2,
+			showDialog,
 		};
 	},
 };
