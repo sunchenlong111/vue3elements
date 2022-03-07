@@ -1,6 +1,6 @@
   
 <template>
-  <div>
+  <div class="container">
     <Topnav />
     <div class="banner">
       <h1>轱辘UI</h1>
@@ -19,6 +19,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.container{
+  height: 100%;
+  background: lightgreen;
+}
 .banner {
   padding: 100px 0;
   display: flex;
