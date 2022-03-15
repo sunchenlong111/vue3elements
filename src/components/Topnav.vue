@@ -1,76 +1,93 @@
 <template>
-  <div class="topnav">
-    <div class="logo">LOGO</div>
-    <ul class="menu">
-      <li>菜单1</li>
-      <li>菜单2</li>
-    </ul>
-    <span class="toggleAside" @click="toggleMenu"></span>
-  </div>
+	<div class="topnav">
+		<router-link to="/" class="logo">
+			<svg class="icon">
+				<use xlink:href="#icon-king"></use>
+			</svg>
+		</router-link>
+		<ul class="menu">
+			<li>
+				<router-link to="/doc">文档</router-link>
+			</li>
+		</ul>
+		<svg v-if="toggleMenuButtonVisible" class="toggleAside" @click="toggleMenu">
+			<use xlink:href="#icon-menu"></use>
+		</svg>
+	</div>
 </template>
 
 <script lang="ts">
-import { inject, Ref } from "vue";
+import {inject, Ref} from "vue";
 export default {
-  setup() {
-    const menuVisiable = inject<Ref<boolean>>("menuVisiable");
-    console.log("topNav-menuVisiable" + menuVisiable.value);
-    const toggleMenu = () => {
-      console.log(123)
-      menuVisiable.value = !menuVisiable.value;
-      console.log(menuVisiable.value)
-    };
-    return {
-      toggleMenu,
-    };
-  },
+	props: {
+		toggleMenuButtonVisible: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	setup() {
+		const menuVisible = inject<Ref<boolean>>("menuVisible");
+		console.log("topNav-menuVisiable" + menuVisible.value);
+		const toggleMenu = () => {
+			menuVisible.value = !menuVisible.value;
+		};
+		return {
+			toggleMenu,
+		};
+	},
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+$color: #007974;
 .topnav {
-  background: pink;
-  display: flex;
-  padding: 16px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  justify-content: center;
-  align-items: center;
-  > .logo {
-    max-width: 6em;
-    margin-right: auto;
-  }
-  > .menu {
-    display: flex;
-    white-space: nowrap;
-    flex-wrap: nowrap;
-    > li {
-      margin: 0 1em;
-    }
-  }
-  > .toggleAside {
-    width: 24px;
-    height: 24px;
-    background: red;
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: none;
-  }
-  @media (max-width: 500px) {
-    > .menu {
-      display: none;
-    }
-    > .logo {
-      margin: 0 auto;
-    }
-    > .toggleAside {
-      display: inline-block;
-    }
-  }
+	color: $color;
+	display: flex;
+	padding: 16px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+	justify-content: center;
+	align-items: center;
+  box-sizing: border-box;
+	> .logo {
+		max-width: 6em;
+		margin-right: auto;
+		> svg {
+			width: 32px;
+			height: 32px;
+		}
+	}
+	> .menu {
+		display: flex;
+		white-space: nowrap;
+		flex-wrap: nowrap;
+		> li {
+			margin: 0 1em;
+		}
+	}
+	> .toggleAside {
+		width: 32px;
+		height: 32px;
+		position: absolute;
+		left: 16px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: none;
+		background: fade-out(black, 0.9);
+	}
+	@media (max-width: 500px) {
+		> .menu {
+			display: none;
+		}
+		> .logo {
+			margin: 0 auto;
+		}
+		> .toggleAside {
+			display: inline-block;
+		}
+	}
 }
 </style>
